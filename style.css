@@ -24,13 +24,23 @@ body {
 
 .app-header {
     display: flex;
-    background-color: rgb(222, 255, 255);
     height: 70px;
     width: 100%;
 }
 
 .header-nav {
     flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-icon1 {
+    margin-left: 25px;
+}
+
+.header-icon2 {
+    margin-right: 25px;
 }
 
 .header-nav-ul {
@@ -39,16 +49,24 @@ body {
     justify-content: space-between;
 }
 
-.header-nav-li1 {
+.main-display {
     display: flex;
-    justify-content: center;
+    height: 200px;
+    width: 100%;
+}
+
+.side-pane {
+    flex-grow: 1;
+    background-color: gray;
+    height: 150px;
+    width: 10px;
+    border-radius: 0px 70px 70px 0px;
+    display: flex;
     align-items: center;
 }
 
-.main-display {
-    display: flex;
-    background-color: green;
-    height: 250px;
+.display-area {
+    flex-grow: 4;
 }
 
 .side-pane-ul {
