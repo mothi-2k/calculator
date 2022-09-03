@@ -3,12 +3,31 @@ const action = ['add', 'subtract', 'multiply', 'divide', 'modulus'];
 
 let expression = '0';
 
-console.log('heleo');
-console.log(document.querySelector('.button-equal'));
 document.querySelector('.button-equal').addEventListener(
     'click',
     () => {
         evaluate();
+    }
+);
+
+document.querySelector('.button-clear').addEventListener(
+    'click',
+    () => {
+        expression = '0';
+        document.querySelector('.calc-content-main').innerHTML = expression;
+    }
+);
+
+document.querySelector('.button-backspace').addEventListener(
+    'click', 
+    () => {
+        if(expression.length > 1) {
+            expression = expression.substring(0, expression.length-1);
+            document.querySelector('.calc-content-main').innerHTML = expression;
+        } else {
+            expression = '0'
+            document.querySelector('.calc-content-main').innerHTML = expression;
+        }
     }
 );
 
@@ -64,12 +83,18 @@ function evaluate() {
         exp = exp.replaceAll('÷', '/');
         exp = exp.replaceAll('×', '*')
         result = eval(exp);
-        document.querySelector('.calc-content-main').innerHTML = parseFloat(result.toFixed(7));
-        for(let i = 4; i > 1; i--) {
-            document.querySelector('.old'+i).innerHTML = document.querySelector('.old'+(i-1)).innerHTML;
+        if (isNaN(result)) {
+            document.querySelector('.calc-content-main').innerHTML = '= ( ͡╥ ͜ʖ ͡╥))';
+            expression = '0';
+        } else {
+            document.querySelector('.calc-content-main').innerHTML = `= ${parseFloat(result.toFixed(7))}`;
+            for(let i = 4; i > 1; i--) {
+                document.querySelector('.old'+i).innerHTML = document.querySelector('.old'+(i-1)).innerHTML;
+            }
+            document.querySelector('.old1').innerHTML = expression;
+            expression = result.toString(); 
         }
-        document.querySelector('.old1').innerHTML = expression;
-        expression = result.toString(); 
+        
     }    
 }
 
