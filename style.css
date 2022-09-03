@@ -135,7 +135,6 @@ body {
     font-family: 'Varela Round', sans-serif;
     font-weight: bolder;
     font-size: 20px;
-    cursor: pointer;
     color: #E0E0E0;
 }
 
@@ -155,3 +154,17 @@ body {
     margin-bottom: auto;
 }
 
+.num-button {
+    font-family: 'Varela Round', sans-serif;
+    border: none;
+    background: none;
+    font-size: 20px;
+    font-weight: bolder;
+    cursor: pointer;
+    color: whitesmoke;
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
