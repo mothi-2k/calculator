@@ -10,6 +10,13 @@ document.querySelector('.button-equal').addEventListener(
     }
 );
 
+document.querySelector('.button-decimal').addEventListener(
+    'click',
+    () => {
+        decimalClick();
+    }
+);
+
 document.querySelector('.button-clear').addEventListener(
     'click',
     () => {
@@ -41,16 +48,6 @@ action.forEach(element => {
     );
 });
 
-funButtons.forEach(element => {
-    let button = document.querySelector('.button-'+element);
-    button.addEventListener(
-        'click',
-        () => {
-            funClick(button.value)
-        }
-    );
-});
-
 for(let i = 0; i < 10; i++) {
     let button = document.querySelector('.button-num' + i);
     button.addEventListener(
@@ -64,24 +61,32 @@ for(let i = 0; i < 10; i++) {
 function numberClick(number) {
     if (expression.length === 1 && expression === '0') {
         expression = number;
+    } else if (expression[expression.length-1] === '%') {
+        expression += '×' + number;
     } else {
         expression += number;
     }
     document.querySelector('.calc-content-main').innerHTML = expression;
 }
 
-function funClick(element) {
-    let button = document.querySelector('.button-'+element);
-    console.log(button);
+function decimalClick() {
+    if(expression.charCodeAt(expression.length-1) >= 48 && expression.charCodeAt(expression.length-1) <= 57 && expression.split('.').length - 1 === 0) {
+        expression += '.';
+    } else if((expression.charCodeAt(expression.length-1) < 48 || expression.charCodeAt(expression.length-1) > 57) && expression.split('.').length - 1 === 0) {
+        expression = expression.substring(0, expression.length - 1) + '.';
+    }
+    document.querySelector('.calc-content-main').innerHTML = expression;
 }
 
 function evaluate() {
     console.log(expression);
     let result;
     let exp = expression;
-    if (expression.charCodeAt(expression.length-1) >= 48 && expression.charCodeAt(expression.length-1) <= 57) {
+    if ((expression.charCodeAt(expression.length-1) >= 48 && expression.charCodeAt(expression.length-1) <= 57) || expression[expression.length-1] === '%') {
         exp = exp.replaceAll('÷', '/');
-        exp = exp.replaceAll('×', '*')
+        exp = exp.replaceAll('×', '*');
+        exp = exp.replaceAll('%', '/100');
+        console.log(exp);
         result = eval(exp);
         if (isNaN(result)) {
             document.querySelector('.calc-content-main').innerHTML = '= ( ͡╥ ͜ʖ ͡╥))';
@@ -100,10 +105,14 @@ function evaluate() {
 
 function actionClick(action) {
     console.log('in action'  + expression);
-    if (expression.length > 0 && expression.charCodeAt(expression.length-1) >= 48 && expression.charCodeAt(expression.length-1) <= 57)  { 
-        expression += action
+    if ((expression.length > 0 && expression.charCodeAt(expression.length-1) >= 48 && expression.charCodeAt(expression.length-1) <= 57) || expression[expression.length-1] === '%')   { 
+        if((action === '%' && expression.split('%').length < 3) || action !== '%') {
+            expression += action;
+        }
     } else {
-        expression = expression.substring(0, expression.length-1) + action;
+        if (action !== '%') {
+            expression = expression.substring(0, expression.length-1) + action;
+        }
     }
     document.querySelector('.calc-content-main').innerHTML = expression;
     console.log(expression);
