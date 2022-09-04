@@ -21,7 +21,7 @@ document.querySelector('.button-clear').addEventListener(
     'click',
     () => {
         expression = '0';
-        document.querySelector('.calc-content-main').innerHTML = expression;
+        displayArea(expression);
     }
 );
 
@@ -30,10 +30,10 @@ document.querySelector('.button-backspace').addEventListener(
     () => {
         if(expression.length > 1) {
             expression = expression.substring(0, expression.length-1);
-            document.querySelector('.calc-content-main').innerHTML = expression;
+            displayArea(expression);
         } else {
             expression = '0'
-            document.querySelector('.calc-content-main').innerHTML = expression;
+            displayArea(expression);
         }
     }
 );
@@ -66,7 +66,7 @@ function numberClick(number) {
     } else {
         expression += number;
     }
-    document.querySelector('.calc-content-main').innerHTML = expression;
+    displayArea(expression);
 }
 
 function decimalClick() {
@@ -75,7 +75,7 @@ function decimalClick() {
     } else if((expression.charCodeAt(expression.length-1) < 48 || expression.charCodeAt(expression.length-1) > 57) && expression.split('.').length - 1 === 0) {
         expression = expression.substring(0, expression.length - 1) + '.';
     }
-    document.querySelector('.calc-content-main').innerHTML = expression;
+    displayArea(expression);
 }
 
 function evaluate() {
@@ -89,14 +89,17 @@ function evaluate() {
         console.log(exp);
         result = eval(exp);
         if (isNaN(result)) {
-            document.querySelector('.calc-content-main').innerHTML = '= ( ͡╥ ͜ʖ ͡╥))';
+            displayArea('= ( ͡╥ ͜ʖ ͡╥))');
             expression = '0';
         } else {
-            document.querySelector('.calc-content-main').innerHTML = `= ${parseFloat(result.toFixed(7))}`;
+            displayArea(`= ${parseFloat(result.toFixed(7))}`);
             for(let i = 4; i > 1; i--) {
-                document.querySelector('.old'+i).innerHTML = document.querySelector('.old'+(i-1)).innerHTML;
+                let old = document.querySelector('.old'+i);
+                old.innerHTML = document.querySelector('.old'+(i-1)).innerHTML;
+                old.scrollLeft = old.scrollWidth;
             }
             document.querySelector('.old1').innerHTML = expression;
+            document.querySelector('.old1').scrollLeft = document.querySelector('.old1').scrollWidth;;
             expression = result.toString(); 
         }
         
@@ -114,6 +117,12 @@ function actionClick(action) {
             expression = expression.substring(0, expression.length-1) + action;
         }
     }
-    document.querySelector('.calc-content-main').innerHTML = expression;
+    displayArea(expression);
     console.log(expression);
+}
+
+function displayArea(content) {
+    let mainContent = document.querySelector('.calc-content-main');
+    mainContent.innerHTML = content;
+    mainContent.scrollLeft = mainContent.scrollWidth;
 }

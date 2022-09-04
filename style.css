@@ -89,6 +89,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    width: 100%;
 }
 
 .display-area > p {
@@ -97,19 +98,29 @@ body {
 
 .calc-content-main {
     font-size: 34px;
+    overflow-x: scroll;
     /* position: absolute;
     bottom: 10%;
     right: 0;
     line-height: 200%; */
 }
 
+.calc-content-main::-webkit-scrollbar {
+    display: none;
+}
+
 .calc-content-old {
     font-size: 24px;
     color: #B8B8B8;
+    overflow-x: scroll;
     /* position: absolute;
     bottom: 10%;
     right: 0;
     line-height: 200%; */
+}
+
+.calc-content-old::-webkit-scrollbar {
+    display: none;
 }
 
 .side-pane-ul {
